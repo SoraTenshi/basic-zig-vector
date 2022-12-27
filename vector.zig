@@ -27,13 +27,13 @@ pub fn Vec(comptime T: type) type {
         }
 
         pub fn pushBack(this: *Self, element: T) !void {
-            this.element_count += 1;
-            if (this.element_count == this.buffer.len) {
+            if (this.element_count + 1 == this.buffer.len) {
                 try stdout.writeAll("Realloc\n");
                 this.buffer = try this.alloc.realloc(this.buffer, this.buffer.len * 2);
             }
 
             this.buffer[this.element_count] = element;
+            this.element_count += 1;
         }
 
         pub fn at(this: Self, index: usize) ?*T {
